@@ -10,11 +10,11 @@ var role = require('../services/role');
 
 router.post('/signup', (req, res) => {
     let user = req.body;
-    query = 'SELECT email, password, role, status FROM user WHERE email=?';
+    query = 'SELECT email, password, role, status FROM user WHERE email = ?';
     connection.query(query, [user.email], (err, results) => {
         if (!err) {
             if (results.length <= 0) {
-                query = "INSERT INTO user(name, contactNumber, email, password, status, role) VALUES (?,?,?,?,'false',?);";
+                query = "INSERT INTO user(name, contactNumber, email, password, status, role) VALUES (?, ?, ?, ?, 'false', ?)";
                 connection.query(query, [user.name, user.contactNumber, user.email, user.password, process.env.USER_ROLE], (err, results) => {
                     if (!err) {
                         return res.status(200).json({ message: 'Successfully registered.' })
@@ -93,7 +93,7 @@ router.post('/forgotPassword', (req, res) => {
 });
 
 router.get('/get', auth.authToken, role.checkRole, (req, res) => {
-    var query = "SELECT id, name, contactNumber, email, status FROM user WHERE role='user'";
+    var query = "SELECT id, name, contactNumber, email, status FROM user WHERE role = 'user'";
     connection.query(query, (err, results) => {
         if (!err) {
             return res.status(200).json(results);
