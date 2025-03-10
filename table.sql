@@ -24,7 +24,20 @@ CREATE TABLE product(
     name varchar(255) NOT NULL,
     categoryId integer NOT NULL,
     description varchar(255),
-    price integer,
+    price float(20,2),
     status varchar(20),
+    primary key(id)
+);
+
+CREATE TABLE bill(
+    id int NOT NULL AUTO_INCREMENT,
+    uuid varchar(200) NOT NULL,
+    name varchar(255) NOT NULL,
+    email varchar(255) NOT NULL,
+    contactNumber varchar(255) NOT NULL,
+    paymentMethod varchar(255) NOT NULL,
+    total float(20,2) NOT NULL,
+    productDetails JSON DEFAULT NULL,
+    createdBy varchar(255) NOT NULL,
     primary key(id)
 );
